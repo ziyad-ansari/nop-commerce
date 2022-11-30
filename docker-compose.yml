@@ -19,7 +19,9 @@ services:
     networks:
       - private-net
     volumes:
-      - db-vol
+      - type: volume
+        source: db-vol
+        target: /var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=test
