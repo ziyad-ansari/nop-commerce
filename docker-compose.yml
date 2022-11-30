@@ -5,7 +5,7 @@ services:
       context: .
     networks:
       - public-net
-        private-net
+      - private-net
     ports:
       - target: 80
         published: 80
