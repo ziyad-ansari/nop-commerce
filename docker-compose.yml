@@ -1,0 +1,41 @@
+version: '3.9'
+services:
+  app-srv:
+    build:
+      context: .
+    networks:
+      - public-net
+        private-net
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+    environment:
+      - MYSQL_SERVER=db-srv
+
+  db-srv:
+    image: mysql:8.0
+    networks:
+      - private-net
+    volumes:
+      - db-vol
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=directdevops
+      - MYSQL_PASSWORD=directdevops
+
+networks:
+  private-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.201.0/24
+  public-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.202.0/24
+volumes:
+  db-vol:
